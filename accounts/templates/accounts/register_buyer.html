@@ -1,0 +1,17 @@
+<!-- accounts/templates/accounts/register_buyer.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buyer Registration</title>
+</head>
+<body>
+    <h2>Register as a Buyer</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>

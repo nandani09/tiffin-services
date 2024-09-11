@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.pk %}Update Product{% else %}Add New Product{% endif %}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/accounts/register/buyer/">Register as Buyer</a></li>
+                <li><a href="/accounts/register/seller/">Register as Seller</a></li>
+                <li><a href="{% url 'products:product_list' %}">Product Listed</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>{% if form.instance.pk %}Update Product{% else %}Add New Product{% endif %}</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Tiffin Services. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 class User(AbstractUser):
     is_buyer=models.BooleanField(default=False)
@@ -12,5 +13,5 @@ class buyer(models.Model):
     address = models.TextField()
 
 class Seller(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='account_seller')
     business_name = models.CharField(max_length=100)

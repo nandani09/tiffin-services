@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/accounts/register/buyer/">Register as Buyer</a></li>
+                <li><a href="/accounts/register/seller/">Register as Seller</a></li>
+                <li><a href="{% url 'products:product_list' %}">Product Listed</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Product List</h1>
+        <ul>
+            {% for product in products %}
+                <li>
+                    <strong>{{ product.name }}</strong>: {{ product.description }} - ${{ product.price }}
+                    {% if product.available %}
+                        <span>(Available)</span>
+                    {% else %}
+                        <span>(Not Available)</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'products:product_form' %}">Add New Product</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Tiffin Services. All rights reserved.</p>
+    </footer>
+</body>
+</html>

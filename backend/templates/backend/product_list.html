@@ -1,0 +1,6 @@
+<h2>Available Tiffins</h2>
+<ul>
+    {% for product in products %}
+    <li>{{ product.name }} - {{ product.price }} Rs</li>
+    {% endfor %}
+</ul>

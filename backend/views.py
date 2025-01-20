@@ -18,16 +18,62 @@ def buyer_register(request):
     return render(request, 'backend/buyer_register.html', {'form': form})
 
 # Seller registration view
+# views.py
+from django.shortcuts import render, redirect
+from .forms import SellerRegistrationForm
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+
+from django.contrib import messages
+
+
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from .forms import SellerRegistrationForm
+from django.db import IntegrityError
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def seller_register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SellerRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            Seller.objects.create(user=user, shop_name=request.POST['shop_name'], address=request.POST['address'], phone_number=request.POST['phone_number'])
-            return redirect('login')
+            # Get form data
+            shop_name = form.cleaned_data['shop_name']
+            password = form.cleaned_data['password']
+            
+            # Generate a unique username
+            base_username = shop_name.lower().replace(" ", "_")
+            username = base_username
+            counter = 1
+            while User.objects.filter(username=username).exists():
+                username = f"{base_username}_{counter}"
+                counter += 1
+            
+            try:
+                # Create a new User
+                user = User.objects.create_user(username=username, password=password)
+                
+                # Create the Seller object
+                seller = form.save(commit=False)
+                seller.user = user
+                seller.save()
+
+                # Redirect to the Thank You page
+                return redirect('thank_you')
+            except IntegrityError:
+                # If something unexpected occurs
+                form.add_error(None, "An unexpected error occurred. Please try again.")
+        else:
+            form.add_error(None, "Invalid data submitted. Please check and try again.")
     else:
-        form = UserCreationForm()
+        form = SellerRegistrationForm()
+
     return render(request, 'backend/seller_register.html', {'form': form})
+
+
+
+
 
 # Product list view for buyers
 def product_list(request):
@@ -46,6 +92,14 @@ def add_product(request):
         return redirect('product_list')
     return render(request, 'backend/product_form.html')
 def home(request):
-    return render(request, 'backend/home.html')
+    return render(request, 'backend/dashboard.html')
 
 
+def seller_login(request):
+    return render(request, 'backend/seller_login.html')  # Replace 'login.html' with your template name
+
+# views.py
+
+
+def thank_you(request):
+    return render(request, 'backend/thank_you.html') 

@@ -135,3 +135,9 @@ STATICFILES_DIRS = [
     "C:/Users/Thakkar Het/OneDrive/Desktop/tiffintales/dabbawala/custom_static",  # Use the actual path
 ]
 
+
+AUTHENTICATION_BACKENDS = [
+    'backend.backends.PhoneNumberBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+

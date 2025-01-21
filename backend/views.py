@@ -4,6 +4,17 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Buyer, Seller, Product
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .forms import SellerRegistrationForm
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from .forms import SellerRegistrationForm
+from django.db import IntegrityError
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login
 
 # Buyer registration view
 def buyer_register(request):
@@ -19,20 +30,9 @@ def buyer_register(request):
 
 # Seller registration view
 # views.py
-from django.shortcuts import render, redirect
-from .forms import SellerRegistrationForm
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 
 
-from django.contrib import messages
 
-
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-from .forms import SellerRegistrationForm
-from django.db import IntegrityError
-from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def seller_register(request):
     if request.method == 'POST':
@@ -96,10 +96,34 @@ def home(request):
 
 
 def seller_login(request):
-    return render(request, 'backend/seller_login.html')  # Replace 'login.html' with your template name
+    if request.method == 'POST':
+        phone_number = request.POST.get('phone_number')  # Input name should match the form
+        password = request.POST.get('password')
+
+        # Authenticate user
+        user = authenticate(username=phone_number, password=password)
+        if user is not None:
+            # Check if the user is associated with a Seller
+            if hasattr(user, 'seller'):
+                login(request, user)
+                return redirect('seller_dashboard')  # Redirect to seller dashboard
+            else:
+                messages.error(request, "You are not authorized as a seller.")
+        else:
+            messages.error(request, "Invalid phone number or password.")
+    
+    return render(request, 'backend/seller_login.html')
+
+
 
 # views.py
 
 
 def thank_you(request):
     return render(request, 'backend/thank_you.html') 
+
+
+
+@login_required
+def seller_dashboard(request):
+    return render(request, 'backend/seller_dashboard.html')

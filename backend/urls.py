@@ -1,5 +1,7 @@
 from django.urls import path
-from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+from . import views  # Import views
 
 urlpatterns = [
     path('', views.home, name='home'),  # Define the homepage URL
@@ -10,4 +12,12 @@ urlpatterns = [
     path('thank-you/', views.thank_you, name='thank_you'), 
     path('login/', views.seller_login, name='seller_login'),
     path('seller-dashboard/', views.seller_dashboard, name='seller_dashboard'),
+
+    # Corrected routes for tiffin management
+    path('add-tiffin/', views.add_tiffin, name='add_tiffin'),
+    path('tiffins/', views.tiffin_list, name='tiffin_list'),
 ]
+
+# Serve media files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

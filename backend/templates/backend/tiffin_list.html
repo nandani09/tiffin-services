@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiffin List</title>
+    <style>
+        /* Cool modern styles for tiffin_list.html */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f6d365, #fda085);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        li {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        li:hover {
+            transform: scale(1.03);
+            box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        h3 {
+            color: #ff4e50;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            max-width: 150px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #ff4e50;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            background: #ff4e50;
+            color: white;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <h2>Available Tiffins</h2>
+    <ul>
+        {% for tiffin in tiffins %}
+            <li>
+                <h3>{{ tiffin.name }} - ${{ tiffin.price }}</h3>
+                <p><strong>Meal:</strong> {{ tiffin.meal }}</p>
+                <p><strong>Ingredients:</strong> {{ tiffin.ingredients }}</p>
+                <p><strong>Description:</strong> {{ tiffin.description }}</p>
+                {% if tiffin.image %}
+                    <img src="{{ tiffin.image.url }}" alt="{{ tiffin.name }}">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_tiffin' %}">Add New Tiffin</a>
+</body>
+</html>

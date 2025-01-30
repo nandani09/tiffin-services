@@ -127,3 +127,23 @@ def thank_you(request):
 @login_required
 def seller_dashboard(request):
     return render(request, 'backend/seller_dashboard.html')
+
+
+
+from django.shortcuts import render, redirect
+from .forms import TiffinForm
+from .models import Tiffin
+
+def add_tiffin(request):
+    if request.method == 'POST':
+        form = TiffinForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('tiffin_list')  # Redirect to a list of tiffins or dashboard
+    else:
+        form = TiffinForm()
+    return render(request, 'backend/add_tiffin.html', {'form': form})
+
+def tiffin_list(request):
+    tiffins = Tiffin.objects.all()
+    return render(request, 'backend/tiffin_list.html', {'tiffins': tiffins})

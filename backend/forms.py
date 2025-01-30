@@ -1,4 +1,6 @@
 # forms.py
+
+from .models import Tiffin
 from django import forms
 from .models import Seller
 from django.contrib.auth.models import User
@@ -20,3 +22,16 @@ class SellerRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match.")
 
         return cleaned_data
+
+
+
+
+
+class TiffinForm(forms.ModelForm):
+    class Meta:
+        model = Tiffin
+        fields = ['name', 'price', 'meal', 'image', 'ingredients', 'description']
+        widgets = {
+            'ingredients': forms.Textarea(attrs={'rows': 3}),
+            'description': forms.Textarea(attrs={'rows': 3}),
+        }

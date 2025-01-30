@@ -128,11 +128,15 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
+# STATICFILES_DIRS = [
+#     "C:/Users/Thakkar Het/OneDrive/Desktop/tiffintales/dabbawala/custom_static",  # Use the actual path
+# ]
+
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-STATICFILES_DIRS = [
-    "C:/Users/Thakkar Het/OneDrive/Desktop/tiffintales/dabbawala/custom_static",  # Use the actual path
+    os.path.join(BASE_DIR, 'static')  # Ensure this folder exists
 ]
 
 

@@ -48,3 +48,25 @@ def create_user_for_seller(sender, instance, created, **kwargs):
             username=instance.shop_name,  # Ensure this is unique
             password='default_password'  # Or generate a random password
         )
+
+
+
+
+
+
+class Tiffin(models.Model):
+    MEAL_CHOICES = [
+        ('Breakfast', 'Breakfast'),
+        ('Lunch', 'Lunch'),
+        ('Dinner', 'Dinner'),
+    ]
+
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    meal = models.CharField(max_length=20, choices=MEAL_CHOICES)
+    image = models.ImageField(upload_to='tiffins/')
+    ingredients = models.TextField()
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name

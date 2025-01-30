@@ -185,7 +185,9 @@
 
   <!-- Header Section -->
   <div class="header">
-    <img alt="Background image of various dishes" class="header-img" src="static/images/tiffin_pic.jpg" />
+    {% load static %}
+    <img src="{% static 'images/tiffin_pic.jpg' %}" alt="Tiffin Image">
+
     <div class="header-content">
       <h1>Dabbawala</h1>
       <p>Discover the best homemade food in Ahmedabad</p>
@@ -196,6 +198,22 @@
           <i class="fas fa-search"></i>
         </button>
       </div>
+    </div>
+    <div class="nav-links">
+      <button style="padding: 10px 20px; background-color: #ff6347; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        About
+      </button>
+      <a href="{% url 'add_tiffin' %}" style="text-decoration: none;">
+        <button style="padding: 10px 20px; background-color: #ff6347; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          Add Tiffin
+        </button>
+      </a>
+      {% comment %} <a href="{% url 'seller_login' %}" style="text-decoration: none;">
+        <button style="padding: 10px 20px; background-color: #ff6347; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          Login
+        </button>
+      </a> {% endcomment %}
+      {% comment %} <a href="#">Sign up</a> {% endcomment %}
     </div>
     
       {% comment %} <a href="#">Sign up</a> {% endcomment %}
@@ -210,7 +228,8 @@
     <div class="content" style="display: flex; justify-content: space-between; align-items: center; width: 80%; max-width: 1200px;">
         <!-- Left Side: Image Section -->
         <div class="image-section" style="flex: 1; padding-right: 20px;">
-            <img alt="Two people working together at a desk with documents and charts" height="400" src="static/images/tiffin1_pic.jpg" width="600"/>
+          <img src="{% static 'images/tiffin1_pic.jpg' %}" alt="Tiffin Image">
+
         </div>
         
         <!-- Right Side: Text Section -->
